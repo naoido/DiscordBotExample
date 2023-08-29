@@ -9,15 +9,16 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
-public class App {
+public class JDACore {
     public static JDA jda;
+    public static final String prefix = "!";
     private static final String TOKEN;
 
-    static  {
+    static {
         // "/src/main/java/resources/private.property" を読み込み"token"を取得
         Properties properties = new Properties();
         try {
-            properties.load(App.class.getResourceAsStream("/private.property"));
+            properties.load(JDACore.class.getResourceAsStream("/private.property"));
             TOKEN = properties.getProperty("token");
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -2,6 +2,7 @@ package com.naoido.discordbot.command.manager;
 
 import com.naoido.discordbot.command.Command;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
@@ -12,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import static com.naoido.discordbot.App.jda;
+import static com.naoido.discordbot.JDACore.jda;
 
 public class CommandManager extends ListenerAdapter {
     private static final Set<Command> commands = new HashSet<>();
@@ -23,6 +24,18 @@ public class CommandManager extends ListenerAdapter {
         for (Command command: commands) {
             if (command.getName().equalsIgnoreCase(event.getName())) {
                 command.handle(event);
+            }
+        }
+    }
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) return;
+
+        String cmd = event.getMessage().getContentDisplay().split(" ")[0];
+        for (Command command: commands) {
+            if (command.isPrefixCommand(cmd)) {
+                command.prefixHandle(event);
             }
         }
     }
@@ -42,7 +55,7 @@ public class CommandManager extends ListenerAdapter {
                 if (Command.class.isAssignableFrom(clazz) && !clazz.getSimpleName().equals("Command")) {
                     Command command = (Command) clazz.cast(clazz.getDeclaredConstructor().newInstance());
                     commands.add(command);
-                    slashCommandData.add(command.getSlashCommandData());
+                    if (command.getSlashCommandData() != null) slashCommandData.add(command.getSlashCommandData());
                     logger.info("コマンド" + clazz.getSimpleName() + "を登録しました。");
                 }
             }
