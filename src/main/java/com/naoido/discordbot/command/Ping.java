@@ -13,12 +13,18 @@ public class Ping implements Command {
 
     @Override
     public void prefixHandle(MessageReceivedEvent event) {
-        event.getChannel().sendMessage("pong!").queue();
+        long start = System.currentTimeMillis();
+        event.getMessage().reply("Just a moment...").queue(m -> {
+            m.editMessage(":satellite: Ping: " + (System.currentTimeMillis() - start) + "ms").queue();
+        });
     }
 
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        event.reply("pong!").queue();
+        long start = System.currentTimeMillis();
+        event.reply("Just a moment...").queue(m -> {
+                m.editOriginal(":satellite: Ping: " + (System.currentTimeMillis() - start) + "ms").queue();
+        });
     }
 
     @Override
