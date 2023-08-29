@@ -3,6 +3,8 @@ package com.naoido.discordbot;
 import com.naoido.discordbot.command.manager.CommandManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.util.Properties;
 
 public class JDACore {
     public static JDA jda;
-    public static final String prefix = "!";
+    public static final String PREFIX = "!";
     private static final String TOKEN;
 
     static {
@@ -30,6 +32,8 @@ public class JDACore {
         jda = JDABuilder.createDefault(TOKEN)
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT) // getContentDisplay() を有効化
                 .addEventListeners(new CommandManager())
+                .setActivity(Activity.playing("Testing..."))
+                .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .build();
 
         CommandManager.registerCommands();

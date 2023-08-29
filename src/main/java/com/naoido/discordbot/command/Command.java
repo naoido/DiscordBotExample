@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 public interface Command {
-    default boolean isPrefixCommand(String commandLine) { return commandLine.equals(JDACore.prefix + getName()); };
+    default boolean isPrefixCommand(String commandLine) { return commandLine.equals(JDACore.PREFIX + getName()); }
     void prefixHandle(MessageReceivedEvent event);
     void handle(SlashCommandInteractionEvent event);
     SlashCommandData getSlashCommandData();
