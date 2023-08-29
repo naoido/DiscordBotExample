@@ -5,11 +5,13 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -20,7 +22,7 @@ public class CommandManager extends ListenerAdapter {
     private static final Logger logger = Logger.getLogger(CommandManager.class.getName());
 
     @Override
-    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         for (Command command: commands) {
             if (command.getName().equalsIgnoreCase(event.getName())) {
                 command.handle(event);
@@ -49,7 +51,7 @@ public class CommandManager extends ListenerAdapter {
         File file = new File(url.getPath());
 
         Set<SlashCommandData> slashCommandData = new HashSet<>();
-        for (String f : file.list()) {
+        for (String f : Objects.requireNonNull(file.list())) {
             if (f.matches(".+\\.class$")) {
                 Class<?> clazz = Class.forName(packageName + "." + f.replace(".class", ""));
                 if (Command.class.isAssignableFrom(clazz) && !clazz.getSimpleName().equals("Command")) {
