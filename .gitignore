@@ -42,4 +42,4 @@ bin/
 .DS_Store
 
 # private file
-**/src/main/resources/private.property
+**/src/main/resources/private.properties
