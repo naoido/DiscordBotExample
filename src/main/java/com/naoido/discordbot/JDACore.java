@@ -17,10 +17,10 @@ public class JDACore {
     private static final String TOKEN;
 
     static {
-        // "/src/main/java/resources/private.property" を読み込み"token"を取得
+        // "/src/main/java/resources/private.properties" を読み込み"token"を取得
         Properties properties = new Properties();
         try {
-            properties.load(JDACore.class.getResourceAsStream("/private.property"));
+            properties.load(JDACore.class.getResourceAsStream("/private.properties"));
             TOKEN = properties.getProperty("token");
         } catch (IOException e) {
             throw new RuntimeException(e);

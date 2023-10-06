@@ -7,11 +7,6 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 public class Ping implements Command {
     @Override
-    public String getName() {
-        return "ping";
-    }
-
-    @Override
     public void prefixHandle(MessageReceivedEvent event) {
         long start = System.currentTimeMillis();
         event.getMessage().reply("Just a moment...").queue(m -> {

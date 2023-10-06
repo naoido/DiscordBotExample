@@ -1,4 +1,4 @@
-package com.naoido.discordbot.model;
+package com.naoido.discordbot.command.enums;
 
 import java.util.Arrays;
 

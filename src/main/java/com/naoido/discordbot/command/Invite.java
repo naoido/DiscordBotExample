@@ -23,9 +23,4 @@ public class Invite implements Command {
     public SlashCommandData getSlashCommandData() {
         return Commands.slash(getName(), "inviteURLを取得します。");
     }
-
-    @Override
-    public String getName() {
-        return "invite";
-    }
 }
